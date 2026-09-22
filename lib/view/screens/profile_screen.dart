@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/core/app_routes.dart';
+import 'package:todo_app/data/model/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const new({super.key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -54,7 +60,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             SizedBox(height: 50),
             MaterialButton(
-              onPressed: () {},
+              onPressed: () async {
+                _showLoading();
+                var userBox = Hive.box<UserModel>('User');
+                await userBox
+                    .put("UserKey", UserModel(fullName: fullName.text))
+                    .then((value) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(AppRoutes.home);
+                    })
+                    .catchError((error) {
+                      Navigator.of(context).pop();
+                      _showError(error);
+                    });
+              },
               color: Color(0xff515B92),
               padding: EdgeInsets.all(15),
               minWidth: 400,
@@ -73,6 +92,58 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _showLoading() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Row(
+            spacing: 20,
+            children: [
+              CircularProgressIndicator(),
+              Text(
+                "Loading...",
+                style: TextStyle(fontSize: 16, fontWeight: .w400),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showError(String error) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Error',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: .bold,
+              color: Colors.red,
+            ),
+          ),
+          content: Text(
+            error,
+            style: TextStyle(fontSize: 16, fontWeight: .w600),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Oky'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

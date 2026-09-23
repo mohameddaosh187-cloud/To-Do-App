@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/view/screens/profile_screen.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/core/app_dialog.dart';
+import 'package:todo_app/data/model/task_model.dart';
 import 'package:todo_app/view/widgets/choose_color_widget.dart';
 import 'package:todo_app/view/widgets/custom_material_button.dart';
 import 'package:todo_app/view/widgets/custom_text_form_field.dart';
@@ -100,11 +102,34 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
 
             CustomMaterialButton.name(
-              onPressed: () {
+              onPressed: () async {
                 log("Title: ${titleTask.text}");
                 log("Des: ${desTask.text}");
                 log("Status: $dropdownButtonValue");
                 log("Color: $colorSelected");
+                AppDialog.showLoading(context);
+                var taskBox = Hive.box<TaskModel>('Tasks');
+                await taskBox
+                    .add(
+                      TaskModel(
+                        title: titleTask.text,
+                        description: desTask.text,
+                        status: dropdownButtonValue == "Pending"
+                            ? .pending
+                            : .done,
+                        colorHex: colorSelected,
+                      ),
+                    )
+                    .then((value) {
+                      Navigator.of(context).pop();
+                      titleTask.clear();
+                      desTask.clear();
+                      colorSelected = 0xff2196F3;
+                    })
+                    .catchError((error) {
+                      Navigator.of(context).pop();
+                      AppDialog.showError(context, error);
+                    });
               },
               text: "Save Task",
             ),

@@ -1,17 +1,6 @@
-# todo_app
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#MY UI SCREEN
+<img width="1080" height="2424" alt="Screenshot_1790379952" src="https://github.com/user-attachments/assets/5655038b-f782-45b6-9d6c-f2b0a2534dc5" />
+<img width="1080" height="2424" alt="Screenshot_1790377992" src="https://github.com/user-attachments/assets/f396b5c6-d8fc-4e33-818f-cf2dc9d2676e" />
+<img width="1080" height="2424" alt="Screenshot_1790378061" src="https://github.com/user-attachments/assets/94b12f27-f8d4-4d6e-953b-55135f85ab9f" />
+<img width="1080" height="2424" alt="Screenshot_1790378163" src="https://github.com/user-attachments/assets/91fc666e-f256-4e2e-a0a1-04436f41d334" />
+<img width="1080" height="2424" alt="Screenshot_1790378144" src="https://github.com/user-attachments/assets/525d8318-e83b-4dab-aafc-c5d59446204b" />
